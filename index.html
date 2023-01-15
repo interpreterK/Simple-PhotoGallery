@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Image Gallery Slides</title>
+	<style>
+		.Gallery-Container > * {box-sizing: border-box}
+		.Gallery-Container div {height: 250px}
+		.Next {
+			right: 0;
+			border-radius: 10px 0 0 10px;
+		}
+		.Previous {
+			left: 0;
+			border-radius: 0 10px 10px 0;
+		}
+
+		.Gallery-Container {
+			width: 500px;
+			height: 300px;
+			position: relative;
+		}
+		.Gallery-Container button {
+			background-color: rgba(0,0,0,0);
+			color: white;
+			backdrop-filter: blur(0px);
+			font-size: 30px;
+			top: 50%;
+			height: 25%;
+			padding: 12px;
+			margin: -50px 0 0 0;
+			border: 0; 
+			cursor: pointer;
+			user-select: none;
+			transition: backdrop-filter .5s, background-color .5s;
+			position: absolute;
+		}
+		.Gallery-Container button:hover {
+			backdrop-filter: blur(10px);
+			background-color: rgba(0,0,0,.5)
+		}
+		.Gallery-Container img {
+			display: none;
+			border-radius: 20px;
+			width: 100%;
+			height: 100%;
+		}
+	</style>
+</head>
+<body>
+	<div class="Gallery-Container">
+		<button id="Next-Image" class="Next" onclick="g_Next_Image(true)">&#10095;</button>
+		<button id="Previous-Image" class="Previous" onclick="g_Next_Image(false)">&#10094;</button>
+		<!--Images For The Gallery-->
+		<!--Add An "img" With An src=, Make Sure class="Gallery-Image" is specified in it.-->
+		<img src="./GalleryImages/Flowers1.webp" alt="Image" class="Gallery-Image">
+		<img src="./GalleryImages/Flowers2.jpg" alt="Image" class="Gallery-Image">
+		<img src="./GalleryImages/Flowers3.webp" alt="Image" class="Gallery-Image">
+		<img src="./GalleryImages/Flowers4.jpeg" alt="Image" class="Gallery-Image">
+		<img src="./GalleryImages/Flowers5.jpg" alt="Image" class="Gallery-Image">
+		<!---->
+	</div>
+	<script>
+		const Previous = document.getElementById("Previous-Image")
+		const Next     = document.getElementById("Next-Image")
+
+		const GalleryImages = document.getElementsByClassName("Gallery-Image")
+
+		let CurrentImage = GalleryImages[0]
+		let Slide_Index = 0
+
+		function g_Next_Image(Forward) {
+			if (Forward) {
+				Slide_Index += 1
+				if (Slide_Index > GalleryImages.length-1)
+					Slide_Index = 0
+			} else {
+				Slide_Index -= 1
+				if (Slide_Index == -1)
+					Slide_Index = GalleryImages.length-1
+			}
+
+			for (let i = 0; i < GalleryImages.length; i++) {
+				GalleryImages[i].style.display = "none"
+			}
+			GalleryImages[Slide_Index].style.display = "block"
+		}
+		CurrentImage.style.display = "block"
+	</script>
+</body>
+</html>
